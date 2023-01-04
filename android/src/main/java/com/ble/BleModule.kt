@@ -6,9 +6,18 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 import android.util.Log
 
-import com.ble.BleManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.annotation.AnnotationRetention.*
+import kotlin.annotation.AnnotationTarget.*
+import com.ble.BleManager
 import com.ble.utils.*
+import com.facebook.react.bridge.Arguments
+
 
 class BleModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {

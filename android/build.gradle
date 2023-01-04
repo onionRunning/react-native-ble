@@ -59,8 +59,14 @@ android {
 }
 
 repositories {
+  maven { url 'https://maven.aliyun.com/repository/central' }
+  maven { url 'https://maven.aliyun.com/repository/google' }
+  maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+  maven { url 'https://maven.aliyun.com/repository/jcenter' }
+  maven { url 'https://jitpack.io' }
   mavenCentral()
   google()
+  jcenter()
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -69,8 +75,15 @@ dependencies {
   // For < 0.71, this will be from the local maven repo
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native"
+  implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation 'com.github.getActivity:XXPermissions:16.6'
+
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
 }
 
 if (isNewArchitectureEnabled()) {

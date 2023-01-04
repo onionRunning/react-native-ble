@@ -1,0 +1,10 @@
+/__mocks__
+/__tests__
+/node_modules
+/ios
+/android
+babel.config.js
+metro.config.js
+.eslintrc.js
+
+mock

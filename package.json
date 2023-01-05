@@ -1,6 +1,6 @@
 {
-  "name": "react-native-ble",
-  "version": "0.1.0",
+  "name": "react-native-ble-5e",
+  "version": "0.1.1",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -48,9 +48,6 @@
     "url": "https://github.com/onionRunning/react-native-ble/issues"
   },
   "homepage": "https://github.com/onionRunning/react-native-ble#readme",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.2.2",

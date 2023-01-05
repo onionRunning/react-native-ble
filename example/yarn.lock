@@ -3297,6 +3297,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmmirror.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-ble-5e@^0.1.1:
+  version "0.1.1"
+  resolved "https://npm.wemore.com/react-native-ble-5e/-/react-native-ble-5e-0.1.1.tgz#a33e27eeb1427bd83902194a95da0924ec8c8dd8"
+  integrity sha512-8F40PyEw9OoKB29DlbwXe3pOw5r/FmFi5Em8L/yMwEiZBBMtR0FhV7rwBDLVf4MDF7rGXqLiO6C85TpYhXqhGA==
+
 react-native-codegen@^0.70.6:
   version "0.70.6"
   resolved "https://registry.npmmirror.com/react-native-codegen/-/react-native-codegen-0.70.6.tgz#2ce17d1faad02ad4562345f8ee7cbe6397eda5cb"

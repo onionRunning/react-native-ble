@@ -14,6 +14,7 @@ import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 
+
 @Suppress("ObsoleteSdkInt", "MissingPermission")
 class BleManager private constructor(context: Context): BluetoothGattCallback() {
   private val bluetoothManager: BluetoothManager =
@@ -22,9 +23,9 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
   private val BluetoothAdapter.isDisable: Boolean
       get() = !isEnabled
   // 多设备管理
-
   companion object {
     private const val TAG = "BleManager"
+    private var applicationContext: Context? = null
 
     private const val MAX_DEVICES_COUNT = 5
     private const val DEVICE_ADD = 0
@@ -36,12 +37,6 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
 
     @Volatile
     private var instance: BleManager? = null
-
-    private var applicationContext: Context? = null
-
-    fun install(context: Context) {
-      applicationContext = context.applicationContext
-    }
 
     fun getInstance(): BleManager {
       return instance ?: synchronized(BleManager::class.java) {
@@ -56,6 +51,9 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
     }
   }
 
+  fun install(context: Context) {
+    applicationContext = context.applicationContext
+  }
   // 是否支持
   fun isSupport(): Boolean = bluetoothAdapter != null
 

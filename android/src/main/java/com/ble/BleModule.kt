@@ -19,8 +19,10 @@ import com.ble.utils.*
 import com.facebook.react.bridge.Arguments
 
 
-class BleModule(reactContext: ReactApplicationContext) :
-  ReactContextBaseJavaModule(reactContext) {
+@Suppress("Unused")
+class BleModule constructor(
+    private val reactContext: ReactApplicationContext
+): ReactContextBaseJavaModule(reactContext) {
 
   override fun getName(): String {
     return NAME
@@ -52,7 +54,7 @@ class BleModule(reactContext: ReactApplicationContext) :
       promise.resolve(
           Arguments.createMap().apply {
               putInt(CODE, code)
-              description?.let { putString("data", it) }
+              description?.let { putString("data",  it) }
           }
       )
   }

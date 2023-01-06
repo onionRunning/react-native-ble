@@ -8,14 +8,73 @@ ble
 npm install react-native-ble
 ```
 
+```sh
+yarn add react-native-ble
+```
+
 ## Usage
 
 ```js
-import { multiply } from 'react-native-ble';
+import {bleModuleApi} from 'react-native-ble'
 
 // ...
 
-const result = await multiply(3, 7);
+const getPermissions = async () => {
+  const res = await bleModuleApi.judgePermissionOk()
+  // {data: '', code: 0/1/200}
+  // code === 0, 当前设备不支持蓝牙权限
+  // code === 1, 当前设备没开启蓝牙权限
+  // code === 2, 设备没开启蓝牙扫描权限
+  // code === 200 , 当前设备权限开启
+}
+
+const requestPermission = async () => {
+  const res = await bleModuleApi.requestPermission()
+
+  // res === true 请求权限成功
+  // res === false 请求权限失败
+}
+
+```
+
+- **android需要进行集成**
+
+> android/app/src/main/AndroidManifest.xml 添加相关权限
+
+```AndroidManifest.xml
+...
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required= "true" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <!--Android 12需要的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"  android:usesPermissionFlags="neverForLocation"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+> 引用插件 android/app/build.gradle
+
+```build.gradle
+
+    implementation project(':react-native-ble-5e')
+
+```
+
+> MainApplication.kt
+
+```MainApplication.kt
+
+...
+import com.ble.BleManager
+
+
+
+...
+override fun onCreate() {
+  ...
+  BleManager.install(this)
+}
 ```
 
 ## Contributing

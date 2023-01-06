@@ -76,6 +76,21 @@ class BleModule constructor(
           }
       )
   }
+
+//  扫描设备
+  @ReactMethod
+  fun scanDevice() {
+    Log.e("repeat_error", "rn --> scanDevice")
+    BleManager.getInstance().scan { flag, p ->
+      EventEmitter.sendEvent(
+        EVENT_SCAN_RESULT,
+        Arguments.createMap().apply {
+          putInt(CODE, if (flag) CODE_SUCCESS else CODE_FAILURE_TIMEOUT)
+          if (flag) putMap(DATA, p?.first?.toMap()) else putString(DATA, "Scan Timeout")
+        }
+      )
+    }
+  }
 }
 
 
@@ -84,3 +99,6 @@ internal const val CODE_FAILURE_BLE_NOT_OPEN = 2
 internal const val CODE_FAILURE_PERMISSIONS_DENIED = 1
 internal const val CODE_SUCCESS = 200
 internal const val CODE = "code"
+internal const val EVENT_SCAN_RESULT = "EVENT_SCAN_RESULT"
+internal const val CODE_FAILURE_TIMEOUT = 6
+internal const val DATA = "data"

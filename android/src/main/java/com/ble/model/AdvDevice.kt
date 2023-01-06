@@ -1,4 +1,4 @@
-package com.minbay.pixelartboard.model
+package com.ble.model
 
 import android.bluetooth.BluetoothDevice
 import android.os.Parcelable

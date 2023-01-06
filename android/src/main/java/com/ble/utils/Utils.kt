@@ -21,3 +21,10 @@ internal val bleLocationPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION
  */
 fun isBlePermissionGranted(context: Context): Boolean =
     XXPermissions.isGranted(context, bleLocationPermissions)
+
+
+/*** byte数组转成十六进制字符串*/
+fun ByteArray?.toHexString(): String {
+  if (this == null || this.isEmpty()) return "[empty]"
+  return joinToString(separator = " ") { "%02X".format(it) }
+}

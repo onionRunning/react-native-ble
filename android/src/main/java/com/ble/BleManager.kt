@@ -1,22 +1,11 @@
 package com.ble
 
 import android.bluetooth.*
-import android.bluetooth.BluetoothAdapter.ACTION_STATE_CHANGED
-import android.bluetooth.BluetoothGatt.*
-import android.bluetooth.BluetoothGattCharacteristic.*
-import android.bluetooth.le.ScanCallback
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
-import android.os.Handler
-import android.util.Log
-import android.widget.Toast
-
+import java.util.concurrent.CopyOnWriteArrayList
 
 @Suppress("ObsoleteSdkInt", "MissingPermission")
-class BleManager private constructor(context: Context): BluetoothGattCallback() {
+class BleManager private constructor(context: Context): BluetoothGattCallback(), OnLeScanListener{
   private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
   private val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
@@ -25,7 +14,6 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
   // 多设备管理
   companion object {
     private const val TAG = "BleManager"
-    private var applicationContext: Context? = null
 
     private const val MAX_DEVICES_COUNT = 5
     private const val DEVICE_ADD = 0
@@ -38,6 +26,8 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
     @Volatile
     private var instance: BleManager? = null
 
+    private var applicationContext: Context? = null
+
     fun getInstance(): BleManager {
       return instance ?: synchronized(BleManager::class.java) {
         instance ?: run {
@@ -49,11 +39,12 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
         }
       }
     }
+    fun install(context: Context) {
+      applicationContext = context.applicationContext
+    }
   }
 
-  fun install(context: Context) {
-    applicationContext = context.applicationContext
-  }
+
   // 是否支持
   fun isSupport(): Boolean = bluetoothAdapter != null
 
@@ -61,4 +52,7 @@ class BleManager private constructor(context: Context): BluetoothGattCallback() 
   fun isEnable(): Boolean = bluetoothAdapter?.isEnabled ?: false
 
 
+  override fun onLeScanResult(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
+
+  }
 }

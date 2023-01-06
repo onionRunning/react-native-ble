@@ -4,6 +4,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 要求使用ble -->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required= "true" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <!--Android 12需要的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"  android:usesPermissionFlags="neverForLocation"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
     <application
       android:name=".MainApplication"

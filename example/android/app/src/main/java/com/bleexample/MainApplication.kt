@@ -23,7 +23,7 @@ class MainApplication : Application(), ReactApplication {
 
         override fun getPackages(): List<ReactPackage> {
             val packages: MutableList<ReactPackage> = PackageList(this).packages
-            packages.add(BlePackage())
+            // packages.add(BlePackage())
 
             // Packages that cannot be autolinked yet can be added manually here, for example:
             // packages.add(new MyReactNativePackage());

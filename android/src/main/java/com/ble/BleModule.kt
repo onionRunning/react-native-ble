@@ -17,6 +17,7 @@ import kotlin.annotation.AnnotationTarget.*
 import com.ble.BleManager
 import com.ble.utils.*
 import com.facebook.react.bridge.Arguments
+import com.hjq.permissions.OnPermissionCallback
 
 
 @Suppress("Unused")
@@ -28,8 +29,6 @@ class BleModule constructor(
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
   fun multiply(a: Double, b: Double, promise: Promise) {
     promise.resolve(a * b)
@@ -39,6 +38,25 @@ class BleModule constructor(
     const val NAME = "Ble"
   }
 
+  @ReactMethod
+  fun requestBlePermission(promise: Promise) {
+    reactContext.currentActivity?.let {
+      ensureBlePermissionGranted(it, object: OnPermissionCallback {
+        override fun onGranted(permissions: MutableList<String>, all: Boolean) {
+          if (isBlePermissionGranted(it)) {
+            promise.resolve(true)
+            return
+          }
+          promise.resolve(false)
+        }
+        override fun onDenied(permissions: MutableList<String>, never: Boolean) {
+          promise.resolve(true)
+        }
+      })
+    } ?: promise.reject(Exception("Activity is null"))
+  }
+
+  // 判断当前连接是否具有权限!
   @ReactMethod
   fun isAllOk(promise: Promise) {
       Log.e("repeat_error", "rn --> isAllOk")

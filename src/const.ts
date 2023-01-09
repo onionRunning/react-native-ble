@@ -5,11 +5,15 @@ export interface BleModuleApi {
   startScanBle(): void
 
   // 获取扫码结果
-  requestScanResultListener?(fn: (m: {data: BleDeviceModel}) => void): void
+  requestScanResultListener(fn: (m: {data: BleDeviceModel}) => void): void
   // 移除扫码结果
-  removeScanResultListener?(): void
+  removeScanResultListener(): void
 
-  startConnectBle?(mac: string, sn: string): Promise<{data: any; code: number}>
+  startConnectBle(mac: string, sn: string): Promise<{data: any; code: number}>
+
+  startConnectBleFn(sn: string, fn: (...s: any) => void): void
+
+  disConnectBle(sn: string): void
 }
 
 export interface BleDeviceModel {

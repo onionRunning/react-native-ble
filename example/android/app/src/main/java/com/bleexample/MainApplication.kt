@@ -11,6 +11,7 @@ import com.bleexample.newarchitecture.MainApplicationReactNativeHost
 import com.facebook.react.config.ReactFeatureFlags
 import com.facebook.soloader.SoLoader
 import com.ble.BleManager
+import com.ble.EventEmitter
 import com.bleexample.MainApplication
 import com.facebook.react.ReactInstanceManager
 import java.lang.reflect.InvocationTargetException
@@ -45,6 +46,7 @@ class MainApplication : Application(), ReactApplication {
 
     override fun onCreate() {
         super.onCreate()
+        EventEmitter.install(reactNativeHost)
         // If you opted-in for the New Architecture, we enable the TurboModule system
         ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
         SoLoader.init(this,  /* native exopackage */false)

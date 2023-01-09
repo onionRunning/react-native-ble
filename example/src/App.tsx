@@ -4,7 +4,7 @@ import {bleModuleApi} from '../../src/index'
 
 export default function App() {
   const [result, setResult] = React.useState<string>('')
-  const [isStart, setStart] = React.useState(false)
+  const [connectResult, setConnectResult] = React.useState('')
 
   console.info(bleModuleApi, 'hello')
   React.useEffect(() => {
@@ -33,26 +33,27 @@ export default function App() {
   }
 
   const startScan = () => {
-    bleModuleApi.startScanBle()
-    setStart(true)
+    // bleModuleApi.startScanBle()
+    // setStart(true)
+    bleModuleApi.startConnectBleFn('70129G01716NY', data => {
+      console.info(data, '-------')
+      if (data.code === 200) {
+        setConnectResult('连接成功!')
+        return
+      }
+      setConnectResult('连接失败!')
+    })
   }
 
-  const getResult = (res: any) => {
-    console.info(res, '------------')
+  const disconnect = () => {
+    bleModuleApi.disConnectBle('70129G01716NY')
   }
-
-  React.useEffect(() => {
-    if (!isStart) return
-    // bleModuleApi.requestScanResultListener(getResult)
-    // return () => {
-    //   bleModuleApi.removeScanResultListener()
-    // }
-  }, [isStart])
 
   const isNeedRequest = result === '暂未申请权限!'
   return (
     <View style={styles.container}>
       <Text>设备蓝牙扫描状态: {result}</Text>
+      <Text>当前蓝牙连接状态: {connectResult}</Text>
       {isNeedRequest ? (
         <TouchableOpacity onPress={requestPermission} style={styles.touch}>
           <Text>申请Ble权限</Text>
@@ -68,6 +69,10 @@ export default function App() {
       ) : (
         <View />
       )}
+
+      <TouchableOpacity onPress={disconnect} style={styles.touch}>
+        <Text>断开蓝牙连接</Text>
+      </TouchableOpacity>
     </View>
   )
 }

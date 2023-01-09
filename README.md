@@ -35,6 +35,23 @@ const requestPermission = async () => {
   // res === false 请求权限失败
 }
 
+// 开始连接蓝牙
+const startScan = () => {
+  // 连接的蓝牙名
+  bleModuleApi.startConnectBleFn('70129G01716NY', data => {
+    if (data.code === 200) {
+      setConnectResult('连接成功!')
+      return
+    }
+    setConnectResult('连接失败!')
+  })
+}
+
+// 开始断开蓝牙
+const disconnect = () => {
+  bleModuleApi.disConnectBle('70129G01716NY')
+}
+
 ```
 
 - **android需要进行集成**
@@ -67,12 +84,14 @@ const requestPermission = async () => {
 
 ...
 import com.ble.BleManager
+import com.ble.EventEmitter
 
 
 
 ...
 override fun onCreate() {
   ...
+  EventEmitter.install(reactNativeHost)
   BleManager.install(this)
 }
 ```

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import com.hjq.permissions.XXPermissions
 import android.os.Build
+import com.facebook.react.bridge.ReadableArray
 import com.hjq.permissions.OnPermissionCallback
 
 
@@ -39,5 +40,25 @@ fun ensureBlePermissionGranted(context: Context, callback: OnPermissionCallback)
   } else {
     // this is bad...
     callback.onGranted(bleLocationPermissions.asList(), true)
+  }
+}
+
+/*** 前端命令转byte array*/
+fun ReadableArray.stringArray2ByteArray(): ByteArray = toArrayList().mapNotNull {
+  runCatching {
+    it.toString().toInt(16).toByte()
+  }.getOrNull()
+}.toByteArray()
+
+
+fun <K, V> HashMap<K, V>.find(predicate: (V) -> Boolean): Map.Entry<K, V>? {
+  return entries.let { set ->
+      val iterator = set.iterator()
+      while (iterator.hasNext()) {
+          val entry = iterator.next()
+          if (predicate.invoke(entry.value))
+              return@let entry
+      }
+      null
   }
 }

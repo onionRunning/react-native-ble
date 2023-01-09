@@ -1,9 +1,5 @@
 package com.ble
 
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
 import android.util.Log
 
 import kotlinx.coroutines.CoroutineScope
@@ -15,9 +11,13 @@ import java.util.*
 import kotlin.annotation.AnnotationRetention.*
 import kotlin.annotation.AnnotationTarget.*
 import com.ble.BleManager
+import com.ble.store.InfoDatastore
 import com.ble.utils.*
-import com.facebook.react.bridge.Arguments
+import com.ble.utils.ConnectReplyType.Companion.CONNECT_SUCCESS
+import com.ble.utils.ConnectReplyType.Companion.connectReplyMessage
+import com.facebook.react.bridge.*
 import com.hjq.permissions.OnPermissionCallback
+import com.ble.model.SimpleReply
 
 
 @Suppress("Unused")
@@ -91,6 +91,93 @@ class BleModule constructor(
       )
     }
   }
+
+  @ReactMethod
+  fun connectDevice(sn: String, mac: String, promise: Promise) {
+    Log.e("repeat_error", "rn --> connectDevice")
+    BleManager.getInstance().findBluetoothDevice(mac)?.let { adv ->
+      Log.d(name, "had found device:$adv")
+      MainScope().launch { InfoDatastore.addSN(0, sn) }
+      Log.d(name, "set sn -->$sn")
+      BleManager.getInstance().connect(sn, adv) {
+        val map = Arguments.createMap().apply {
+          val connectSuccess = it == CONNECT_SUCCESS
+          putInt(CODE, if (connectSuccess) CODE_SUCCESS else CODE_FAILURE_CONNECT)
+          if (!connectSuccess)
+            putString(DATA, "Connect state is error:${connectReplyMessage(it)}")
+        }
+        promise.resolve(map)
+      }
+    } ?: promise.resolve(
+      Arguments.createMap().apply {
+        putInt(CODE, CODE_FAILURE_CANNOT_FIND_DEVICE)
+        putString(DATA, "Cannot find this device($mac)")
+      }
+    )
+  }
+
+  @ReactMethod
+  fun sendCommandWithCallback(
+    commandTag: String,
+    readableArray: ReadableArray,
+    promise: Promise
+  ) {
+    val command = readableArray.stringArray2ByteArray()
+
+    BleManager.getInstance().write(
+      data = command.apply {
+        Log.i(
+          "wc_rn",
+          "wc, command${command.toHexString()}"
+        )
+      },
+      reply = object : SimpleReply(commandTag, 10_000L) {
+        override fun onTimeout(commandTag: String) {
+          Log.e(
+            "filter_rn_reply",
+            "timeout:${command.toHexString()}"
+          )
+        }
+
+        override fun onComplete(
+          commandTag: String,
+          uuid: UUID?,
+          hex: String
+        ) {
+          Log.d(
+            "filter_rn_reply",
+            "onComplete:${command.toHexString()}"
+          )
+          promise.resolve(
+            Arguments.createMap().apply {
+              putInt(CODE, CODE_SUCCESS)
+              putString(DATA, hex)
+            }
+          )
+        }
+      }
+    )
+  }
+
+  @ReactMethod
+  fun disconnect(sn: String, promise: Promise) {
+    Log.d("disconnect_debug", "try to disconnect -----> ")
+    BleManager.getInstance().disconnect(sn) {
+
+    }
+  }
+
+  @ReactMethod
+  fun listenBleState() {
+    BleManager.getInstance().listenBleSwitcherState {
+      EventEmitter.sendEvent(
+        EVENT_BLE_SWITCHER_CHANGED,
+        Arguments.createMap().apply {
+          putString(DATA, AdapterState.adapterStateName(it))
+        }
+      )
+    }
+  }
 }
 
 
@@ -102,3 +189,6 @@ internal const val CODE = "code"
 internal const val EVENT_SCAN_RESULT = "EVENT_SCAN_RESULT"
 internal const val CODE_FAILURE_TIMEOUT = 6
 internal const val DATA = "data"
+internal const val CODE_FAILURE_CONNECT = 4
+internal const val CODE_FAILURE_CANNOT_FIND_DEVICE = 5
+internal const val EVENT_BLE_SWITCHER_CHANGED = "EVENT_BLE_SWITCHER_CHANGED"

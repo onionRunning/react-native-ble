@@ -2,7 +2,6 @@ import {NativeEventEmitter, NativeModules} from 'react-native'
 import type {BleDeviceModel, BleModuleApi} from './const'
 const Ble = NativeModules?.Ble || {}
 const BleObserver = new NativeEventEmitter(Ble) || {}
-
 // 扫描蓝牙设备信息
 export const requestScanResultListener = (
   fn: (model: {data: BleDeviceModel; code: number}) => void
@@ -29,9 +28,15 @@ export const startConnectBleFn = (sn: string, fn: (...s: any) => void) => {
         removeScanResultListener()
         const connectRes = await Ble.connectDevice(sn, data?.mac)
         fn(connectRes)
+        console.info(connectRes, 'connectRes')
       }
     }
   })
+}
+
+// 发送通知给蓝牙设备
+export const sendCommandToBle = async (command: string[]) => {
+  return Ble.sendCommandWithCallback('send_msg_to_ble', command)
 }
 
 export const bleModuleApi: BleModuleApi = {
@@ -54,6 +59,5 @@ export const bleModuleApi: BleModuleApi = {
   startConnectBleFn,
   // 断开蓝牙设备
   disConnectBle: Ble.disconnect,
+  sendCommandToBle,
 }
-
-export const hello = 'hello world!'

@@ -13,7 +13,9 @@ export interface BleModuleApi {
 
   startConnectBleFn(sn: string, fn: (...s: any) => void): void
 
-  disConnectBle(sn: string): void
+  disConnectBle(sn?: string): void
+
+  sendCommandToBle(command: string[]): Promise<any>
 }
 
 export interface BleDeviceModel {

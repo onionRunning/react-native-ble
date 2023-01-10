@@ -1,12 +1,13 @@
 import * as React from 'react'
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, Text, TouchableOpacity, TextInput} from 'react-native'
 import {bleModuleApi} from '../../src/index'
 
 export default function App() {
   const [result, setResult] = React.useState<string>('')
   const [connectResult, setConnectResult] = React.useState('')
+  const value = React.useRef('')
 
-  console.info(bleModuleApi, 'hello')
+  // console.info(bleModuleApi, 'hello')
   React.useEffect(() => {
     getPermission()
   }, [])
@@ -47,6 +48,28 @@ export default function App() {
 
   const disconnect = () => {
     bleModuleApi.disConnectBle('70129G01716NY')
+    setConnectResult('断开连接!')
+  }
+
+  const sendTextToBle = async () => {
+    // 发送通知给蓝牙
+    console.info(value.current, '===2===3===4===')
+    const res = await bleModuleApi.sendCommandToBle([
+      'cc',
+      'cc',
+      '00',
+      '02',
+      '02',
+      '01',
+      '00',
+      '00',
+    ])
+    console.info(res, '--=--=--=--=--1')
+  }
+
+  const changeText = (e: string) => {
+    // console.info(e, '--------2--------2-------')
+    value.current = e
   }
 
   const isNeedRequest = result === '暂未申请权限!'
@@ -73,6 +96,11 @@ export default function App() {
       <TouchableOpacity onPress={disconnect} style={styles.touch}>
         <Text>断开蓝牙连接</Text>
       </TouchableOpacity>
+
+      <TextInput onChangeText={changeText} style={styles.input} />
+      <TouchableOpacity onPress={sendTextToBle} style={styles.touch}>
+        <Text>发送通知给蓝牙</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -93,5 +121,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fa0',
     padding: 20,
     borderRadius: 10,
+  },
+  input: {
+    width: '80%',
+    height: 48,
+    borderColor: '#fa0',
+    borderWidth: 1,
+
+    margin: 20,
+    padding: 10,
   },
 })

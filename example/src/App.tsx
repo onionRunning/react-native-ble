@@ -6,6 +6,7 @@ export default function App() {
   const [result, setResult] = React.useState<string>('')
   const [connectResult, setConnectResult] = React.useState('')
   const value = React.useRef('')
+  const [bleRes, setBleRes] = React.useState('')
 
   // console.info(bleModuleApi, 'hello')
   React.useEffect(() => {
@@ -60,11 +61,13 @@ export default function App() {
       '00',
       '02',
       '02',
-      '01',
+      '02',
       '00',
       '00',
     ])
-    console.info(res, '--=--=--=--=--1')
+    console.info(res, '-')
+    console.info(res?.data, 'get info')
+    setBleRes(res?.data)
   }
 
   const changeText = (e: string) => {
@@ -97,10 +100,13 @@ export default function App() {
         <Text>断开蓝牙连接</Text>
       </TouchableOpacity>
 
-      <TextInput onChangeText={changeText} style={styles.input} />
       <TouchableOpacity onPress={sendTextToBle} style={styles.touch}>
         <Text>发送通知给蓝牙</Text>
       </TouchableOpacity>
+      <View>
+        <Text>蓝牙响应</Text>
+        <TextInput disableFullscreenUI style={styles.input} value={bleRes} />
+      </View>
     </View>
   )
 }

@@ -52,6 +52,25 @@ const disconnect = () => {
   bleModuleApi.disConnectBle('70129G01716NY')
 }
 
+// 发送指令到蓝牙设备
+// 注意这里的协议需要你与硬件端进行沟通，通信协议
+const sendTextToBle = async () => {
+  // 发送通知给蓝牙
+  const res = await bleModuleApi.sendCommandToBle([
+    'cc',
+    'cc',
+    '00',
+    '02',
+    '02',
+    '01',
+    '00',
+    '00',
+  ])
+  console.info(res, 'get info')
+}
+
+...
+
 ```
 
 - **android需要进行集成**

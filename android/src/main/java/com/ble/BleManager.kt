@@ -334,10 +334,10 @@ class BleManager private constructor(context: Context): BluetoothGattCallback(),
         val newCharacteristics = cdi.characteristics.apply { add(c) }
         connectionMap[sn] = cdi.copy(characteristics = newCharacteristics)
         // 重复响应已处理 不需要onReply
-        if (lastResponse == hexValue) {
-          Log.d(TAG, "same reply deprecated.")
-          return
-        }
+//        if (lastResponse == hexValue) {
+//          Log.d(TAG, "same reply deprecated.")
+//          return
+//        }
         lastResponse = hexValue
         Log.v("filter_$TAG", "reply ===>")
         characterReply?.onReply(c.uuid, hexValue)

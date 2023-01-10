@@ -145,8 +145,8 @@ class BleModule constructor(
           hex: String
         ) {
           Log.d(
-            "filter_rn_reply",
-            "onComplete:${command.toHexString()}"
+            "filter_wc_rn_reply",
+            "onComplete:${hex}"
           )
           promise.resolve(
             Arguments.createMap().apply {

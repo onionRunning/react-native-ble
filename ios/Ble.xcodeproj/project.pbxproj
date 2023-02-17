@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E555C0D2413F4C50049A1A2 /* Ble.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Ble.m */; };
-		F4FF95D7245B92E800C19C63 /*  Ble.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  Ble.swift */; };
+		6E11B466299F704200A0499F /* CRC16.c in Sources */ = {isa = PBXBuildFile; fileRef = 6E11B465299F704200A0499F /* CRC16.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +24,14 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libBle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBle.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E7B5891CC2AC0600A0062D /* Ble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ble.m; sourceTree = "<group>"; };
-		F4FF95D5245B92E700C19C63 /* Ble-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ble-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* Ble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ble.swift; sourceTree = "<group>"; };
+		6E11B460299F652200A0499F /* BleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleManager.h; sourceTree = "<group>"; };
+		6E11B461299F656200A0499F /* BleManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleManager.m; sourceTree = "<group>"; };
+		6E11B462299F6A2B00A0499F /* BleModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleModule.h; sourceTree = "<group>"; };
+		6E11B463299F6A3B00A0499F /* BleModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleModule.m; sourceTree = "<group>"; };
+		6E11B464299F702A00A0499F /* CRC16.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRC16.h; sourceTree = "<group>"; };
+		6E11B465299F704200A0499F /* CRC16.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CRC16.c; sourceTree = "<group>"; };
+		6E11B467299F780A00A0499F /* Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		6E11B468299F784000A0499F /* Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +56,14 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				F4FF95D6245B92E800C19C63 /* Ble.swift */,
-				B3E7B5891CC2AC0600A0062D /* Ble.m */,
-				F4FF95D5245B92E700C19C63 /* Ble-Bridging-Header.h */,
+				6E11B468299F784000A0499F /* Util.m */,
+				6E11B467299F780A00A0499F /* Util.h */,
+				6E11B465299F704200A0499F /* CRC16.c */,
+				6E11B464299F702A00A0499F /* CRC16.h */,
+				6E11B463299F6A3B00A0499F /* BleModule.m */,
+				6E11B462299F6A2B00A0499F /* BleModule.h */,
+				6E11B461299F656200A0499F /* BleManager.m */,
+				6E11B460299F652200A0499F /* BleManager.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,8 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4FF95D7245B92E800C19C63 /* Ble.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* Ble.m in Sources */,
+				6E11B466299F704200A0499F /* CRC16.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

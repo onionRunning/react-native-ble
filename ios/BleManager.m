@@ -82,6 +82,7 @@
 // 写入数据
 - (void)writeperipheralValue:(NSData *)value {
     NSLog(@"我进入了读写数据!");
+//    NSLog(@"{self.rxCharacteristic.properties} = ", self.rxCharacteristic.properties);
     if(self.rxCharacteristic.properties & CBCharacteristicPropertyWriteWithoutResponse) {
        [self.peripheral writeValue:value forCharacteristic:self.rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
     } else {

@@ -46,7 +46,8 @@ export const startConnectBleFn = async (sn: string, fn: (...s: any) => void) => 
 
 // 发送通知给蓝牙设备
 export const sendCommandToBle = async (command: string[]) => {
-  return Ble.sendCommandWithCallback('send_msg_to_ble', command)
+  const Type = isAndroid ? 'send_msg_to_ble' : 'TAG_COMMAND_DEVICE_SERIAL_NUMBER'
+  return Ble.sendCommandWithCallback(Type, command)
 }
 
 export const bleModuleApi: BleModuleApi = {

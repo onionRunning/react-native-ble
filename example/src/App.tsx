@@ -67,7 +67,7 @@ export default function App() {
     ])
     console.info(res, '-')
     console.info(res?.data, 'get info')
-    setBleRes(res?.data)
+    setBleRes(res?.data?.reason || res?.data)
   }
 
   const changeText = (e: string) => {

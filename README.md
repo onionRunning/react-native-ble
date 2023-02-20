@@ -115,9 +115,13 @@ override fun onCreate() {
 }
 ```
 
-## Contributing
+- **IOS需要进行集成**
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+```md
+需要在info.plist 中添加权限，否则会崩溃
+
+Privacy - Bluetooth Always Usage Description
+```
 
 ## License
 

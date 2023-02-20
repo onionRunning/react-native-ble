@@ -81,6 +81,7 @@
 
 // 写入数据
 - (void)writeperipheralValue:(NSData *)value {
+    NSLog(@"我进入了读写数据!");
     if(self.rxCharacteristic.properties & CBCharacteristicPropertyWriteWithoutResponse) {
        [self.peripheral writeValue:value forCharacteristic:self.rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
     } else {
@@ -114,7 +115,7 @@
                   confirmHandler:^{
                 // 去授权app允许访问蓝牙
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
-                    
+
                 }];
             }
                    cancelHandler: nil
@@ -278,7 +279,7 @@
         unsigned order = 0;
         NSScanner *scanner = [NSScanner scannerWithString:[Util hexString:oderData]];
         [scanner scanHexInt:&order];
-        
+
         NSData *featureData = [data subdataWithRange:NSMakeRange(5, 1)];
         unsigned feature = 0;
         scanner = [NSScanner scannerWithString:[Util hexString:featureData]];
@@ -319,12 +320,12 @@
         isLast = YES;
     }
     NSInteger length = [Util fetchLengthFromResponse:data];
-    
+
     NSData *frameIndexData = [data subdataWithRange:NSMakeRange(6, 2)];
     unsigned frameIndex = 0;
     scanner = [NSScanner scannerWithString:[Util hexString:frameIndexData]];
     [scanner scanHexInt:&frameIndex];
-    
+
     if (length != [data length] - 6) {
         [self.delegate processFail:@{@"reason": @"数据长度对不上啊"}];
         return;
@@ -345,7 +346,7 @@
 - (void)retryReceive:(NSData *)data {
     NSData *frameIndexData = [data subdataWithRange:NSMakeRange(5, 2)]; // 0x cc cc 00 03 86 (00 00)
     NSInteger length = [Util fetchLengthFromResponse:data];
-    
+
     unsigned frameIndex = 0;
     NSScanner *scanner = [NSScanner scannerWithString:[Util hexString:frameIndexData]];
     [scanner scanHexInt:&frameIndex];
@@ -405,7 +406,7 @@
 //            NSString *pageLow = [index substringWithRange:NSMakeRange(2, 2)];
 //            [command addObject:pageHigh];
 //            [command addObject:pageLow];
-//            
+//
 //            NSData *data = [Util convertHexToData:command];
 //            uint8_t *buffer = (uint8_t *)[data bytes];
 //            uint16_t crc16 = CRC_16B(buffer, [data length]);
@@ -418,7 +419,7 @@
 //            NSString *low = [crc16String substringWithRange:NSMakeRange(2, 2)];
 //            [command addObject:high];
 //            [command addObject:low];
-//            
+//
 //            NSData *commandToSend = [Util convertHexToData:command];
 //            [totalData appendData:commandToSend];
 //        }
@@ -443,7 +444,7 @@
 //            NSString *spacing = [Util addSpacing:result];
 //            [self.delegate finished:spacing];
 //        }
-//        
+//
 //    }
 }
 

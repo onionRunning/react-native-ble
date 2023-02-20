@@ -2,12 +2,12 @@ export interface BleModuleApi {
   judgePermissionOk(): Promise<{data: string; code: number}>
   requestPermission(): Promise<string>
   // 开始扫描蓝牙信息
-  startScanBle(): void
+  // startScanBle(): void
 
   // 获取扫码结果
-  requestScanResultListener(fn: (m: {data: BleDeviceModel}) => void): void
+  // requestScanResultListener(fn: (m: {data: BleDeviceModel}) => void): void
   // 移除扫码结果
-  removeScanResultListener(): void
+  // removeScanResultListener(): void
 
   startConnectBle(mac: string, sn: string): Promise<{data: any; code: number}>
 

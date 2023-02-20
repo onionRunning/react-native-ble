@@ -8,7 +8,7 @@ export default function App() {
   const value = React.useRef('')
   const [bleRes, setBleRes] = React.useState('')
 
-  // console.info(bleModuleApi, 'hello')
+  console.info(bleModuleApi, 'hello')
   React.useEffect(() => {
     getPermission()
   }, [])
@@ -90,7 +90,7 @@ export default function App() {
 
       {!isNeedRequest ? (
         <TouchableOpacity onPress={startScan} style={styles.touch}>
-          <Text>开始扫码</Text>
+          <Text>开始扫码且连接</Text>
         </TouchableOpacity>
       ) : (
         <View />

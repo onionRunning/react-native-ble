@@ -10,7 +10,7 @@
 
 #import "BleModule.h"
 //#import "BleFile.h"
-//#import "Util.h"
+#import "Util.h"
 #import "BleManager.h"
 @interface BleModule() <BleManagerProtocol>
 
@@ -56,6 +56,7 @@ RCT_EXPORT_METHOD(connectDevice:(NSString *)code :(NSString *)mac :(RCTPromiseRe
     [self.bleManager connectDevice];
 }
 
+// 判断权限是否打开
 RCT_EXPORT_METHOD(isAllOk:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
     self.resolve = resolve;
     self.reject = reject;
@@ -78,15 +79,18 @@ RCT_EXPORT_METHOD(sendCommandWithCallback:(NSString *)tag
     self.resolve = resolve;
     self.reject = reject;
     self.bleManager.commandTag = tag;
-    // NSLog(@"%@ 发送 %@", tag, commandToSend);
-    // if (self.timer) {
-    //     [self.timer invalidate];
-    // }
-    // self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(cancelTimer) userInfo:nil repeats:FALSE];
-    // [self.bleManager writeperipheralValue:commandToSend];
+
+    NSData *commandToSend = [Util convertHexToData:command];
+    NSLog(@"%@ 发送 %@", tag, commandToSend);
+
+    if (self.timer) {
+        [self.timer invalidate];
+    }
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(cancelTimer) userInfo:nil repeats:FALSE];
+    [self.bleManager writeperipheralValue:commandToSend];
 }
 
-
+// disConnectBle
 RCT_EXPORT_METHOD(disconnect:(NSString *)sn
                   :(RCTPromiseResolveBlock)resolve
                   :(RCTPromiseRejectBlock)reject) {
@@ -101,7 +105,7 @@ RCT_EXPORT_METHOD(getDevicesConnectState:(NSString *)sn
 }
 
 
-
+// 请求蓝牙权限
 RCT_REMAP_METHOD(requestBlePermission,
                  requestBlePermissionWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject) {

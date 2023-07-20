@@ -1,6 +1,6 @@
 # react-native-ble
 
-ble
+react-native-ble is a simple and easy-to-use library for Bluetooth Low Energy (BLE) in React Native. Easily connect and communicate with BLE devices.
 
 ## Installation
 
